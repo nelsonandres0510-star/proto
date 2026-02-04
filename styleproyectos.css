@@ -1,0 +1,189 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    color: #000;
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero {
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5%;
+    text-align: center;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-top: 5vh;
+}
+
+.outline {
+    color: transparent;
+    -webkit-text-stroke: 1px #000;
+    font-style: italic;
+}
+
+/* Ticker Section - AJUSTADA */
+.ticker-container {
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 25px 0;           /* Un poco más estrecho */
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    
+    /* Rayas negras arriba y abajo */
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    z-index: 10;
+}
+
+.ticker-wrapper {
+    display: flex;
+    white-space: nowrap;
+}
+
+.ticker-content {
+    display: flex;
+    gap: 100px; /* Más espacio entre frases para que se lea mejor lento */
+}
+
+.ticker-content span {
+    /* Letra más pequeña */
+    font-size: 1.2rem; 
+    font-weight: 400;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+}
+/* --- NAVEGACIÓN --- */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    /* ajusta el 0.1 */
+    backdrop-filter: blur(10px);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    opacity: 1;
+}
+
+/* --- GALERÍA ACTUALIZADA --- */
+.gallery {
+    padding: 100px 5%;
+    background-color: #fff;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    /* PROPORCIÓN RECTANGULAR: 16:9 es el estándar horizontal */
+    aspect-ratio: 16 / 9; 
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+/* --- BLOQUE DE TEXTO --- */
+.text-content {
+    margin-top: 20px;
+    overflow: hidden; /* Para que la descripción parezca salir de la nada */
+}
+
+.title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.description {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.4;
+    
+    /* ESTADO INICIAL OCULTO */
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease-in-out;
+}
+
+/* --- EFECTOS HOVER --- */
+.gallery-item:hover .description {
+    /* ESTADO ACTIVO */
+    max-height: 100px; /* Suficiente para el texto */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Línea sutil que aparece al hacer hover (opcional) */
+.gallery-item:hover .title {
+    color: #000;
+}
+
+.image-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto hace que el video llene el rectángulo 16:9 */
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+/* Para que el efecto de zoom también funcione con el video */
+.gallery-item:hover video {
+    transform: scale(1.05);
+}
