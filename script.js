@@ -1,31 +1,4 @@
 gsap.registerPlugin(ScrollTrigger);
-
-/* --------------------------------------------------
-   1. ANIMACIÓN INICIAL (PALABRA ESCALABLE)
--------------------------------------------------- */
-gsap.to(".scaling-word", {
-    scrollTrigger: {
-        trigger: ".video-scroll-section",
-        start: "top bottom",
-        end: "top center",
-        scrub: 1,
-    },
-    scale: 0.05,
-    opacity: 0,
-    filter: "blur(20px)",
-    ease: "power2.in"
-});
-
-/* --------------------------------------------------
-   2. ANIMACIÓN VIDEO
--------------------------------------------------- */
-gsap.to("#meuVideo", {
-    opacity: 1,
-    duration: 1,
-    delay: 1,
-    ease: "power2.out"
-});
-
 const heroTl = gsap.timeline({
     scrollTrigger: {
         trigger: ".hero-container",
@@ -36,22 +9,6 @@ const heroTl = gsap.timeline({
         pinSpacing: true
     }
 });
-
-// El video crece hasta cubrirlo todo
-heroTl.to("#meuVideo", {
-    width: "100%",
-    height: "100vh",
-    borderRadius: "0px",
-    erase: "none"
-}, 0); // El 0 hace que empiecen al mismo tiempo
-
-// La palabra se encoge y se desvanece por debajo del video
-heroTl.to(".scaling-word", {
-    scale: 0.1,
-    opacity: 0,
-    filter: "blur(20px)",
-    erase: "none"
-}, 0);
 
 /* --------------------------------------------------
    3. GENERACIÓN DINÁMICA DE PALABRAS
@@ -82,41 +39,28 @@ if (textContainer) {
 }
 
 /* --------------------------------------------------
-   4. ANIMACIÓN EXPLOSIÓN (SCROLL)
+    4. ANIMACIÓN DE REVELADO (DESDE ABAJO)
 -------------------------------------------------- */
-const allWords = document.querySelectorAll('.word-unit');
-
-allWords.forEach(word => {
-    // Estado inicial aleatorio
-    gsap.set(word, {
-        x: gsap.utils.random(-1500, 1500),
-        y: gsap.utils.random(-800, 800),
-        z: gsap.utils.random(-1000, 1000),
-        rotation: gsap.utils.random(-120, 120),
-        opacity: 0
-    });
-
-    // Animación hacia su posición real
-    gsap.to(word, {
-        scrollTrigger: {
-            trigger: ".scroll-area-explosion",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1.5
-        },
-        x: 0,
-        y: 0,
-        z: 0,
-        rotation: 0,
-        opacity: 1,
-        ease: "power2.out"
-    });
+// Estado inicial: las palabras están un poco más abajo y son transparentes
+gsap.set(".word-unit", { 
+    y: 50, 
+    opacity: 0 
 });
 
+// Animación única para todas las palabras con stagger (cascada)
+gsap.to(".word-unit", {
+    scrollTrigger: {
+        trigger: ".scroll-area-explosion",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.8, // Hace que la animación siga el scroll suavemente
+    },
+    y: 0,
+    opacity: 1,
+    stagger: 0.05, // Crea el efecto de que salen una tras otra
+    ease: "power2.out"
+});
 
-/* --------------------------------------------------
-    5. LÓGICA DE RULETA Y HOVER (INTERACCIÓN)
--------------------------------------------------- */
 /* --------------------------------------------------
    5. LÓGICA DE RULETA Y HOVER (INTERACCIÓN)
 -------------------------------------------------- */
@@ -145,8 +89,6 @@ function showNextImage() {
         overwrite: true
     });
 }
-
-// Hover sobre “Honestidad”
 // Hover sobre “Honestidad”
 if (trigger) {
     trigger.addEventListener('mouseenter', () => {
@@ -253,10 +195,6 @@ gsap.utils.toArray(".section-wrapper").forEach(section => {
 });
 ScrollTrigger.refresh();
 
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.registerPlugin(ScrollTrigger);
-
 // Creamos la línea de tiempo
 const expansionTl = gsap.timeline({
     scrollTrigger: {
@@ -295,3 +233,43 @@ expansionTl.to(".center-phrase", {
     scale: 0.9,
     duration: 1
 });
+/* APARICIÓN SIN SCROLL */
+gsap.to(".sticky-main-image", {
+    opacity: 1,
+    duration: 1,
+    delay: 1,
+    ease: "power2.out"
+});
+
+/* SCROLL TIMELINE */
+const stickyTimeline = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".sticky-hero-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+        pin: ".sticky-hero-pin"
+    }
+});
+
+/* ZOOM IMAGEN */
+stickyTimeline.to(".sticky-main-image", {
+    scale: 2.2,
+    ease: "power2.inOut"
+}, 0);
+
+/* TEXTO SALE */
+stickyTimeline.to(".sticky-word-a", {
+    x: -200,
+    opacity: 0
+}, 0);
+
+stickyTimeline.to(".sticky-word-c", {
+    x: 200,
+    opacity: 0
+}, 0);
+
+stickyTimeline.to(".sticky-word-b", {
+    y: 80,
+    opacity: 0
+}, 0);
