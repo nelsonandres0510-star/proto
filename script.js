@@ -13,7 +13,7 @@ const heroTl = gsap.timeline({
 /* --------------------------------------------------
    3. GENERACIÓN DINÁMICA DE PALABRAS
 -------------------------------------------------- */
-const phrase = "Construimos marcas que conecten con su público desde la  humanizamos la comunicación mostrando las marcas arriesgadas y disruptivas";
+const phrase = "Construimos marcas que conecten con su público desde la ,humanizamos la comunicación mostrando las marcas arriesgadas y disruptivas";
 const textContainer = document.getElementById('text-container');
 
 if (textContainer) {
